@@ -1,0 +1,9 @@
+---
+- name: Update mirror list using Reflector
+  when: mirrorlist.reflector.enable == "yes"
+  ansible.builtin.shell: "{{ mirrorlist.reflector.command }}"
+  ignore_errors: yes
+
+- name: Update package database
+  ansible.builtin.command: "pacman -Syy"
+  ignore_errors: yes

@@ -1,0 +1,15 @@
+system:
+  keyboard: "us"
+  ntp: yes
+
+pacman:
+  parallel_download:
+    enable: yes
+    number: "20"
+  verbose_pkg_lists: yes
+  color: yes
+
+mirrorlist:
+  reflector:
+    enable: yes
+    command: "reflector --country Italy,Germany,France --protocol https --age 6 --sort rate --save /etc/pacman.d/mirrorlist"

@@ -1,0 +1,25 @@
+---
+- name: Set keyboard layout
+  ansible.builtin.shell: "loadkeys {{ system.keyboard }}"
+  when: system.keyboard is defined
+
+- name: Include ntp tasks
+  include_tasks: "../../common/ntp.yml"
+
+- name: Include reflector tasks
+  include_tasks: "../../common/reflector.yml"
+
+- name: Include pacman tasks
+  include_tasks: "../../common/pacman.yml"
+
+- name: Install archlinux-keyring
+  ansible.builtin.command: "pacman -S --noconfirm archlinux-keyring"
+  ignore_errors: yes
+
+- name: Initialize pacman keyring
+  ansible.builtin.command: "pacman-key --init"
+  ignore_errors: yes
+
+- name: Refresh package database
+  ansible.builtin.command: "pacman -Syy"
+  ignore_errors: yes

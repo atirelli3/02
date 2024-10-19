@@ -1,0 +1,6 @@
+---
+- name: Enable NTP synchronization
+  when: system.ntp == true
+  ansible.builtin.command:
+    cmd: "timedatectl set-ntp true"
+  ignore_errors: yes
