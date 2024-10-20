@@ -1,12 +1,13 @@
 ---
-- block:
-  name: Check if system is in UEFI mode
-    - stat:
-        path: /sys/firmware/efi
-      register: uefi_mode
-      changed_when: false  # Evita che il task venga considerato "changed"
+- name: Check if system is UEFI
+  ansible.builtin.command: "test -d /sys/firmware/efi"
+  register: uefi_check
+  ignore_errors: true
 
-    - fail:
-        msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
-      when: uefi_mode.stat.exists is not defined or uefi_mode.stat.exists == false
-  
+- name: Set fact if system is UEFI
+  ansible.builtin.set_fact:
+    is_uefi: "{{ uefi_check.rc == 0 }}"
+
+- name: Debug UEFI status
+  ansible.builtin.debug:
+    msg: "System is UEFI: {{ is_uefi }}"
