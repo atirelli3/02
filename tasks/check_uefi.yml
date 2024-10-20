@@ -2,8 +2,8 @@
 - block:
   - stat:
       path: /sys/firmware/efi
-     register: uefi_mode
-     changed_when: false  # Evita che il task venga considerato "changed"
+    register: uefi_mode
+    changed_when: false  # Evita che il task venga considerato "changed"
 
   - fail:
       msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
