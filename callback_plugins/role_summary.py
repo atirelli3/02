@@ -71,7 +71,10 @@ class CallbackModule(CallbackBase):
     def v2_runner_on_failed(self, result, ignore_errors=False):
         if self.loader:
             self.loader.stop()
-        print(f"\r    - {result._task.get_name()}: \033[91mfailed\033[0m")  # Colore rosso per failed
+
+        # Stampa il risultato con il messaggio di errore
+        error_message = result._result.get('msg', 'Task failed')  # Ottieni il messaggio di errore
+        print(f"\r    - {result._task.get_name()}: \033[91mFAILED! => {error_message}\033[0m")  # Colore rosso per failed
 
     def v2_runner_on_skipped(self, result):
         if self.loader:
