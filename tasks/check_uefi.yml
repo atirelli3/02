@@ -4,7 +4,6 @@
     path: /sys/firmware/efi
   register: uefi_mode
   changed_when: false
-  silent: true
 
 - name: Check if system is in UEFI mode
   fail:
