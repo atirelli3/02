@@ -5,13 +5,13 @@ from threading import Thread
 from time import sleep
 
 class Loader:
-    def __init__(self, desc="Loading...", end="Done!", timeout=0.1):
+    def __init__(self, desc="Loading...", end="", timeout=0.1):
         """
         A loader-like context manager
 
         Args:
             desc (str, optional): The loader's description. Defaults to "Loading...".
-            end (str, optional): Final print. Defaults to "Done!".
+            end (str, optional): Final print (left blank to prevent extra lines).
             timeout (float, optional): Sleep time between prints. Defaults to 0.1.
         """
         self.desc = desc
@@ -35,10 +35,9 @@ class Loader:
 
     def stop(self):
         self.done = True
+        # Pulisci la linea del loader ma non stampare nulla
         cols = get_terminal_size((80, 20)).columns
         print("\r" + " " * cols, end="", flush=True)
-        print(f"\r{self.end}", flush=True)
-
 
 class CallbackModule(CallbackBase):
     CALLBACK_VERSION = 2.0
@@ -67,21 +66,20 @@ class CallbackModule(CallbackBase):
     def v2_runner_on_ok(self, result):
         if self.loader:
             self.loader.stop()
-        print("\033[92mok\033[0m")  # Colore verde per ok
+        print(f"\r    - {result._task.get_name()}: \033[92mok\033[0m")  # Colore verde per ok
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
         if self.loader:
             self.loader.stop()
-        print("\033[91mfailed\033[0m")  # Colore rosso per failed
+        print(f"\r    - {result._task.get_name()}: \033[91mfailed\033[0m")  # Colore rosso per failed
 
     def v2_runner_on_skipped(self, result):
         if self.loader:
             self.loader.stop()
-        print("\033[93mskipped\033[0m")  # Colore giallo per skipped
+        print(f"\r    - {result._task.get_name()}: \033[93mskipped\033[0m")  # Colore giallo per skipped
 
     def _print_role_header(self, role_name):
         # Calcola quanti asterischi sono necessari per arrivare a 80 caratteri
         header = f"ROLE [{role_name.upper()}] "
         num_stars = self.total_width - len(header)
         print(f"{header}{'*' * num_stars}")
-
