@@ -8,3 +8,7 @@
   fail:
     msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
   when: uefi_mode.stat.exists is not defined or uefi_mode.stat.exists == false
+
+- name: End play if not in UEFI mode
+  meta: end_play
+  when: uefi_mode.stat.exists is not defined or uefi_mode.stat.exists == false
