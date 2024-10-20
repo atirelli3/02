@@ -1,0 +1,10 @@
+---
+- name: Check if system is in UEFI mode
+  stat:
+    path: /sys/firmware/efi
+  register: uefi_mode
+
+- name: Fail if the system is not in UEFI mode
+  fail:
+    msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
+  when: uefi_mode.exists == false

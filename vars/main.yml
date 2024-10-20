@@ -1,0 +1,37 @@
+hostname: "archlinux"
+
+disk:
+  target: "/dev/sda"
+  filesystem:
+    ext4:
+      enable: false
+    btrfs:
+      enable: true
+      opts:
+        - rw
+        - noatime
+        - compress-force=zstd:1
+        - space_cache=v2
+      subvols:
+        - /var/lib/libvirt
+        - /var/lib/docker
+  encrypt:
+    enable: true
+    type: "luks2"
+    label: "archlinux"
+
+system:
+  keyboard: "us"
+  ntp: true
+
+pacman:
+  parallel_download:
+    enable: true
+    number: "20"
+  verbose_pkg_lists: true
+  color: true
+
+mirrorlist:
+  reflector:
+    enable: true
+    command: "reflector --country Italy,Germany,France --protocol https --age 6 --sort rate --save /etc/pacman.d/mirrorlist"

@@ -4,13 +4,13 @@
   when: system.keyboard is defined
 
 - name: Include ntp tasks
-  include_tasks: "../../common/tasks/ntp.yaml"
+  include_tasks: "../../common/tasks/ntp.yml"
 
 - name: Include reflector tasks
-  include_tasks: "../../common/tasks/reflector.yaml"
+  include_tasks: "../../common/tasks/reflector.yml"
 
 - name: Include pacman tasks
-  include_tasks: "../../common/tasks/pacman.yaml"
+  include_tasks: "../../common/tasks/pacman.yml"
 
 - name: Install archlinux-keyring
   ansible.builtin.command: "pacman -S --noconfirm archlinux-keyring"
