@@ -4,6 +4,7 @@
     path: /sys/firmware/efi
   register: uefi_mode
 
-- fail:
+- name: Fail if the system is not in UEFI mode
+  fail:
     msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
   when: uefi_mode.stat.exists is not defined or uefi_mode.stat.exists == false
