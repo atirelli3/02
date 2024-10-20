@@ -6,14 +6,18 @@
           stat:
             path: /sys/firmware/efi
           register: uefi_mode
-          changed_when: false  # Evita che il task venga considerato "changed"
-          no_log: true  # Nasconde completamente il task stat
+          changed_when: false
+          no_log: true  # Nasconde completamente l'output del task di controllo
 
+        - name: "Ensure the system is in UEFI mode"
+          assert:
+            that:
+              - uefi_mode.stat.exists is defined and uefi_mode.stat.exists == true
+            fail_msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
+      rescue:
         - name: "Fail if the system is not in UEFI mode"
           fail:
             msg: "This playbook requires UEFI, but the system is running in BIOS/Legacy mode."
-          when: uefi_mode.stat.exists is not defined or uefi_mode.stat.exists == false
-      name: "Check if system is in UEFI mode and fail if necessary"
   vars_files:
     - vars/main.yml
 
