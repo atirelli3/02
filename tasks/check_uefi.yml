@@ -4,6 +4,11 @@
   register: uefi_check
   ignore_errors: true
 
+- name: Fail if system is not UEFI
+  ansible.builtin.fail:
+    msg: "This system is not in UEFI mode. Please switch to UEFI mode and try again."
+  when: uefi_check.rc != 0
+
 - name: Set fact if system is UEFI
   ansible.builtin.set_fact:
     is_uefi: "{{ uefi_check.rc == 0 }}"
