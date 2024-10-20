@@ -1,8 +1,8 @@
 - hosts: localhost
   become: true
   tasks:
-    - include_tasks: "tasks/check_uefi.yml"
-      verbosity: 3  # Nasconde l'output a meno che non venga eseguito con -vvv
+    - name: Include the check of UEFI mode
+      include_tasks: "tasks/check_uefi.yml"
   vars_files:
     - vars/main.yml
 
