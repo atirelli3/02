@@ -1,6 +1,6 @@
 ---
 - name: Update pacman.conf with custom settings
-  when: pacman.color == "yes"
+  when: pacman.color == true
   ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     regexp: "^#Color"
@@ -8,7 +8,7 @@
     state: present
 
 - name: Enable verbose package lists
-  when: pacman.verbose_pkg_lists == "yes"
+  when: pacman.verbose_pkg_lists == true
   ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     regexp: "^#VerbosePkgLists"
@@ -16,7 +16,7 @@
     state: present
 
 - name: Enable parallel downloads
-  when: pacman.parallel_download.enable == "yes"
+  when: pacman.parallel_download.enable == true
   ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     regexp: "^#ParallelDownloads"
