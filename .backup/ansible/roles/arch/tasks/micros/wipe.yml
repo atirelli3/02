@@ -1,0 +1,24 @@
+---
+- name: Wipe all filesystem signatures on the disk
+  ansible.builtin.command:
+    cmd: "wipefs -af {{ target_disk }}"
+  become: yes
+  tags: wipe
+
+- name: Clear partition table and zap all on the disk
+  ansible.builtin.command:
+    cmd: "sgdisk --zap-all --clear {{ target_disk }}"
+  become: yes
+  tags: wipe
+
+- name: Align sectors to 2048
+  ansible.builtin.command:
+    cmd: "sgdisk -a 2048 -o {{ target_disk }}"
+  become: yes
+  tags: wipe
+
+- name: Inform system of changes on the disk
+  ansible.builtin.command:
+    cmd: "partprobe {{ target_disk }}"
+  become: yes
+  tags: wipe

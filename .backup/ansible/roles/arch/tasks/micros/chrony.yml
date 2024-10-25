@@ -1,0 +1,38 @@
+---
+- name: Ensure chrony is installed
+  ansible.builtin.package:
+    name: chrony
+    state: present
+  tags: ntp
+
+- name: Configure NTP servers in chrony.conf
+  lineinfile:
+    path: /etc/chrony.conf
+    regexp: '^server'
+    line: |
+      server 0.arch.pool.ntp.org iburst
+      server 1.arch.pool.ntp.org iburst
+      server 2.arch.pool.ntp.org iburst
+      server 3.arch.pool.ntp.org iburst
+    state: present
+    create: yes
+  tags: ntp
+
+- name: Ensure chrony is enabled and started
+  ansible.builtin.systemd:
+    name: chronyd
+    enabled: yes
+    state: started
+  tags: ntp
+
+- name: Ensure time is synchronized
+  ansible.builtin.command:
+    cmd: chronyc tracking
+  register: chrony_sync_status
+  changed_when: false
+  tags: ntp
+
+- name: Display chrony synchronization status
+  debug:
+    msg: "{{ chrony_sync_status.stdout }}"
+  tags: ntp

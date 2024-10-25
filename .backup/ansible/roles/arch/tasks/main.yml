@@ -1,0 +1,21 @@
+---
+
+# Start by updating pacman cache
+- name: Update package database
+  ansible.builtin.pacman:
+    update_cache: yes
+  become: true
+
+
+# ==============================================================================
+#                                0  -  S E T U P
+# ==============================================================================
+
+# Load keyboard layout
+- name: "Set keyboard layout"
+  ansible.builtin.shell:
+    cmd: loadkeys
+
+# ==============================================================================
+#                                 1  -  D I S K
+# ==============================================================================

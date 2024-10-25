@@ -1,0 +1,33 @@
+/
+|_ ansible/
+|  |_ playbooks/  # Collection of a set of playbooks
+|  |  |_ archinstall.yml    # Define all possible roles and tasks to perform on the playbook (Arch)
+|  |  |_ fedorainstall.yml  # Define all possible roles and tasks to perform on the playbook (Fedora)
+|  |  |_ myuserspace.yml    # Define all possible roles and tasks to perform on the playbook*
+|  |
+|  |_ plugins/  # Collection of a set of Ansible (custom) plugins
+|  |  |_ pretty_callback.py
+|  |
+|  |_ roles/
+|  |  |_ common/  # Collection of all common tasks (used by all playbooks of type 'myuserspace')
+|  |  |_ arch/    # Collection of all tasks necessary for install Archlinux (used ONLY by 'archinstall.yml')
+|  |  |  |_ tasks/  # Collection of all tasks
+|  |  |     |_ micros/
+|  |  |     |  |_ pacman.yml
+|  |  |     |  |_ ntp.yml
+|  |  |     |  |_ btrfs.yml
+|  |  |     |  |_ ...
+|  |  |     |
+|  |  |     |_ main.yml
+|  |  |
+|  |  |_ fedora/  # Collection all all tasks necessary for install Fedora (used ONLY by 'fedorainstall.yml')
+|  |_ vars/  # Collection of a set of configurations
+|  |  |_ <hostname>_archconf.yml     # Define which roles and tasks to perform on the 'archinstall' playbook
+|  |  |_ <hostname>_fedoraconf.yml   # Define which roles and tasks to perform on the 'fedorainstall' playbook
+|  |  |_ <username>_conf.yml         # Define which roles and tasks to perform on the 'myuserspace' playbook*
+|  |
+|  |_ ansible.cfg
+|
+|_ install.sh
+|_ README.md
+

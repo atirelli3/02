@@ -1,0 +1,132 @@
+hostname: "dummy"  # Hostname
+
+# System
+system:
+  keyboard: us  # Keyboard layout
+
+# Pacman
+pacman:
+  # Enable additional repository (already define in the default /etc/pacman.conf)
+  repository:
+    multilib: true
+    core-testing: false
+    extra-testing: false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# hostname: "dummy"
+
+
+# system:
+#   lang: "en_US.UTF-8"
+#   timezone: "America/New_York"
+#   extra_lang:
+#     - it_IT.UTF-8
+#   lc_time: "en_US.UTF-8" 
+#   keyboard: "us"
+#   ntp:
+#     chrony: false
+
+# kernel: "linux-zen"
+
+
+# hardware:
+#   cpu: "intel"
+#   gpu: "intel"
+
+
+# network: "networkmanager"
+
+
+# audio: "pipewire"
+
+
+# bootloader:
+#   mountpoint: "esp"
+#   size: "512MiB"
+#   systemd:
+#     enable: false
+#   grub:
+#     enable: true
+#     command: ""
+#     os-prober: false
+
+
+# disk:
+#   target: "/dev/sda"
+#   label: "archlinux"
+#   filesystem:
+#     ext4:
+#       enable: false
+#     btrfs:
+#       enable: true
+#       opts:
+#         - rw
+#         - noatime
+#         - compress-force=zstd:1
+#         - space_cache=v2
+#       subvols:
+#         - /var/lib/libvirt
+#         - /var/lib/docker
+#   encrypt:
+#     enable: true
+#     type: "luks2"
+#     label: "cryptdev"
+
+
+# pacman:
+#   options:
+#     misc:
+#       verbose_pkg_lists: true  
+#       parallel_download:
+#         enable: true
+#         number: "20"
+#       color: true
+#   repository:
+#     multilib: true
+#     testing: false
+
+
+# mirrorlist:
+#   reflector:
+#     enable: true 
+#     command: "reflector --country Italy,Germany,France --protocol https --age 6 --sort rate --save /etc/pacman.d/mirrorlist"

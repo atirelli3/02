@@ -1,0 +1,27 @@
+---
+- name: Ensure systemd-timesyncd is installed
+  ansible.builtin.package:
+    name: systemd-timesyncd
+    state: present
+  tags: ntp
+
+- name: Configure NTP servers in timesyncd.conf
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^NTP='
+    line: 'NTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org'
+    state: present
+    insertafter: '^#?\\[Time\\]'
+  tags: ntp
+
+- name: Ensure systemd-timesyncd is enabled and started
+  ansible.builtin.systemd:
+    name: systemd-timesyncd
+    enabled: yes
+    state: started
+  tags: ntp
+
+- name: Ensure time is synchronized
+  ansible.builtin.command:
+    cmd: timedatectl set-ntp true
+  tags: ntp

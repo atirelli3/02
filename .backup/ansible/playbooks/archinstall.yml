@@ -1,0 +1,10 @@
+---
+- name: Arch Linux Installation Playbook
+  hosts: all
+  become: yes
+  # TODO: Aggiungere supporto dinamico per la selezione del file di conf
+  # vars_files:
+  #   - vars/{{ inventory_hostname }}_archconf.yml
+
+  roles:
+    - role: arch

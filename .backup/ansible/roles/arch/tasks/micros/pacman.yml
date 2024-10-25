@@ -1,0 +1,51 @@
+---
+
+- name: Enable misc options
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: '[options]'
+  loop:
+    - { regexp: '^#?Color', line: 'Color', when: pacman.options.misc.color | default(false) }
+    - { regexp: '^#?ILoveCandy', line: 'ILoveCandy', when: pacman.options.misc.color | default(false) }
+    - { regexp: '^#?VerbosePkgLists', line: 'VerbosePkgLists', when: pacman.options.misc.verbose_pkg_lists | default(false) }
+    - { regexp: '^#?ParallelDownloads', line: 'ParallelDownloads = {{ pacman.options.misc.parallel_download.number | default("5") }}', when: pacman.options.misc.parallel_download.enable | default(false) }
+  become: true
+
+
+- name: Enable multilib repository
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '(\[multilib\][\s\S]*Include = /etc/pacman.d/mirrorlist)'
+    replace: |
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+  when: pacman.repository.multilib | default(false)
+  become: true
+
+- name: Enable testing repository (core)
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '(\[core-testing\][\s\S]*Include = /etc/pacman.d/mirrorlist)'
+    replace: |
+      [core-testing]
+      Include = /etc/pacman.d/mirrorlist
+  when: pacman.repository.core-testing | default(false)
+  become: true
+
+- name: Enable testing repository (extra)
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '(\[extra-testing\][\s\S]*Include = /etc/pacman.d/mirrorlist)'
+    replace: |
+      [extra-testing]
+      Include = /etc/pacman.d/mirrorlist
+  when: pacman.repository.extra-testing | default(false)
+  become: true
+
+- name: Update package database
+  ansible.builtin.pacman:
+    update_cache: yes
+  become: true

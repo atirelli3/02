@@ -1,0 +1,24 @@
+# ==============================================================================
+#                                0  -  S E T U P
+# ==============================================================================
+#
+# This task will setup the 'archiso' media installation:
+#
+# - [x] Update package database
+# - [ ] Load keyboard layout
+# - [ ] Enable NTP (or chrony)
+# - [x] Configure pacman
+# - [ ] Update mirrorlist
+# - [ ] Update arch-keyring
+
+- name: Update package database
+  ansible.builtin.pacman:
+    update_cache: yes
+  become: true
+
+- name: Load keyboard layout
+
+- name: Enable NTP
+
+- name: Configure pacman
+  include: ../micros/pacman.yml

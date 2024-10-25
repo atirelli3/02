@@ -1,0 +1,15 @@
+---
+- name: Ensure the latest Arch Linux keyring is installed
+  ansible.builtin.command:
+    cmd: pacman -Sy archlinux-keyring
+  tags: keyring
+
+- name: Refresh the Arch Linux keyring
+  ansible.builtin.command:
+    cmd: pacman-key --init && pacman-key --populate archlinux
+  tags: keyring
+
+- name: Update pacman package database
+  ansible.builtin.command:
+    cmd: pacman -Sy
+  tags: pacman

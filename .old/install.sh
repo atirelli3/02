@@ -26,4 +26,9 @@ if [[ "$1" = "create" ]]; then
     print_error "FAILED => UEFI mode not detected! Please pass 'nouefi' to bypass."
     exit 1
   fi
+
+  if [[ "$subaction" = "nouefi" ]]; then
+  fi
+
+  # Launch the ansible playbook for the arch installation
 fi

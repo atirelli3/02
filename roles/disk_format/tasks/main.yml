@@ -1,3 +1,0 @@
----
-- name: Wipe the disk
-  include_tasks: wipe_disk.yml
